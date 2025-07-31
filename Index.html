@@ -1,0 +1,60 @@
+<!DOCTYPE html><html>
+  <head>
+    <meta charset="utf-8">
+    <title>Curva Silenciosa</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <style>
+      body { margin: 0; overflow: hidden; }
+      .hidden-message {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: red;
+        font-size: 3em;
+        font-family: monospace;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <a-scene vr-mode-ui="enabled: true"><!-- Fondo blanco -->
+  <a-sky color="#ffffff"></a-sky>
+
+  <!-- Arco curvo (representado como toroide parcial) -->
+  <a-entity position="0 1.2 -3">
+    <a-torus color="#ff69b4" radius="1.5" radius-tubular="0.02" arc="180" rotation="0 0 180"></a-torus>
+    <a-torus color="#000000" radius="1.53" radius-tubular="0.01" arc="180" rotation="0 0 180"></a-torus>
+  </a-entity>
+
+  <!-- Punto rojo arriba del arco -->
+  <a-sphere color="#cc0033" radius="0.07" position="0 2.2 -3"></a-sphere>
+
+  <!-- Mensaje oculto solo visible en VR -->
+  <a-entity id="hiddenMessage" visible="false">
+    <a-text value="NO TODOS LOS MONOS ESTÁN AFUERA" position="0 1.6 -2" align="center" color="red" scale="2 2 2"></a-text>
+  </a-entity>
+
+  <!-- Cámara con detección de modo VR -->
+  <a-entity id="cameraRig">
+    <a-camera id="camera" wasd-controls-enabled="false"></a-camera>
+  </a-entity>
+
+</a-scene>
+
+<script>
+  const scene = document.querySelector('a-scene');
+  const hiddenMessage = document.querySelector('#hiddenMessage');
+
+  scene.addEventListener('enter-vr', () => {
+    hiddenMessage.setAttribute('visible', 'true');
+  });
+
+  scene.addEventListener('exit-vr', () => {
+    hiddenMessage.setAttribute('visible', 'false');
+  });
+</script>
+
+  </body>
+</html>
