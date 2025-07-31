@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
   <head>
     <meta charset="utf-8" />
     <title>Curva Silenciosa</title>
@@ -7,43 +6,50 @@
     <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
   </head>
   <body style="margin:0;overflow:hidden;">
-    <a-scene background="color: white" vr-mode-ui="enabled: true">
+    <a-scene background="color: white" vr-mode-ui="enabled: true"><!-- Grupo de curvas estilo cara triste -->
+  <a-entity position="0 1.5 -2.5">
+    <!-- Cara triste rosa (boca) -->
+    <a-entity id="cara-rosa">
+      <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="1 0 0" rotation="0 0 -60"></a-box>
+      <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="0.5 0 0" rotation="0 0 -30"></a-box>
+      <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="0 0 0" rotation="0 0 0"></a-box>
+      <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="-0.5 0 0" rotation="0 0 30"></a-box>
+      <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="-1 0 0" rotation="0 0 60"></a-box>
+    </a-entity>
 
-      <!-- Grupo del arco -->
-      <a-entity id="arco" position="0 1.5 -2.5">
-        <!-- Crea el arco rosa con cubos rotados como segmentos -->
-        <a-entity id="curva">
-          <!-- Segmentos del arco (puedes agregar más para suavizar) -->
-          <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="1 0 0" rotation="0 0 60"></a-box>
-          <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="0.5 0 0" rotation="0 0 30"></a-box>
-          <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="0 0 0" rotation="0 0 0"></a-box>
-          <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="-0.5 0 0" rotation="0 0 -30"></a-box>
-          <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="-1 0 0" rotation="0 0 -60"></a-box>
-        </a-entity>
+    <!-- Sombra negra justo debajo -->
+    <a-entity id="cara-negra" position="0 -0.07 0.01">
+      <a-box color="#000000" depth="0.05" height="0.05" width="0.3" position="1 0 0" rotation="0 0 -60"></a-box>
+      <a-box color="#000000" depth="0.05" height="0.05" width="0.3" position="0.5 0 0" rotation="0 0 -30"></a-box>
+      <a-box color="#000000" depth="0.05" height="0.05" width="0.3" position="0 0 0" rotation="0 0 0"></a-box>
+      <a-box color="#000000" depth="0.05" height="0.05" width="0.3" position="-0.5 0 0" rotation="0 0 30"></a-box>
+      <a-box color="#000000" depth="0.05" height="0.05" width="0.3" position="-1 0 0" rotation="0 0 60"></a-box>
+    </a-entity>
 
-        <!-- Punto rojo justo encima -->
-        <a-sphere color="#cc0033" radius="0.07" position="0 0.4 0"></a-sphere>
-      </a-entity>
+    <!-- Punto rojo justo encima -->
+    <a-sphere color="#cc0033" radius="0.07" position="0 0.6 0"></a-sphere>
+  </a-entity>
 
-      <!-- Mensaje oculto -->
-      <a-entity id="hidden" visible="false">
-        <a-text value="NO TODOS LOS MONOS ESTÁN AFUERA" color="red"
-                align="center" position="0 2.4 -2.5" scale="1.5 1.5 1.5"></a-text>
-      </a-entity>
+  <!-- Mensaje oculto -->
+  <a-entity id="hidden" visible="false">
+    <a-text value="NO TODOS LOS MONOS ESTÁN AFUERA" color="red"
+            align="center" position="0 2.4 -2.5" scale="1.5 1.5 1.5"></a-text>
+  </a-entity>
 
-      <!-- Cámara fija -->
-      <a-entity camera look-controls="enabled: true" wasd-controls-enabled="false" position="0 1.6 0"></a-entity>
+  <!-- Cámara fija -->
+  <a-entity camera look-controls="enabled: true" wasd-controls-enabled="false" position="0 1.6 0"></a-entity>
 
-    </a-scene>
+</a-scene>
 
-    <script>
-      const scene = document.querySelector('a-scene');
-      scene.addEventListener('enter-vr', () => {
-        document.getElementById('hidden').setAttribute('visible', 'true');
-      });
-      scene.addEventListener('exit-vr', () => {
-        document.getElementById('hidden').setAttribute('visible', 'false');
-      });
-    </script>
+<script>
+  const scene = document.querySelector('a-scene');
+  scene.addEventListener('enter-vr', () => {
+    document.getElementById('hidden').setAttribute('visible', 'true');
+  });
+  scene.addEventListener('exit-vr', () => {
+    document.getElementById('hidden').setAttribute('visible', 'false');
+  });
+</script>
+
   </body>
 </html>
