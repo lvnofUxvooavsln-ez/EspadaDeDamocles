@@ -1,50 +1,49 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <title>Curva Silenciosa</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
-</head>
-<body style="margin:0;overflow:hidden;">
-  <a-scene embedded vr-mode-ui="enabled: true" device-orientation-permission-ui="auto">
+  <head>
+    <meta charset="utf-8" />
+    <title>Curva Silenciosa</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+  </head>
+  <body style="margin:0;overflow:hidden;">
+    <a-scene background="color: white" vr-mode-ui="enabled: true">
 
-    <!-- Fondo blanco -->
-    <a-sky color="#ffffff"></a-sky>
+      <!-- Grupo del arco -->
+      <a-entity id="arco" position="0 1.5 -2.5">
+        <!-- Crea el arco rosa con cubos rotados como segmentos -->
+        <a-entity id="curva">
+          <!-- Segmentos del arco (puedes agregar más para suavizar) -->
+          <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="1 0 0" rotation="0 0 60"></a-box>
+          <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="0.5 0 0" rotation="0 0 30"></a-box>
+          <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="0 0 0" rotation="0 0 0"></a-box>
+          <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="-0.5 0 0" rotation="0 0 -30"></a-box>
+          <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="-1 0 0" rotation="0 0 -60"></a-box>
+        </a-entity>
 
-    <!-- Grupo centrado frente a la cámara -->
-    <a-entity id="curva" position="0 1.6 -2.5">
-      <!-- Arco rosa -->
-      <a-torus color="#ff69b4" radius="1.5" radius-tubular="0.02" arc="180"
-               rotation="0 0 180"></a-torus>
+        <!-- Punto rojo justo encima -->
+        <a-sphere color="#cc0033" radius="0.07" position="0 0.4 0"></a-sphere>
+      </a-entity>
 
-      <!-- Arco negro encima del rosa -->
-      <a-torus color="#000000" radius="1.5" radius-tubular="0.01" arc="180"
-               rotation="0 0 180" position="0 0.03 0.01"></a-torus>
+      <!-- Mensaje oculto -->
+      <a-entity id="hidden" visible="false">
+        <a-text value="NO TODOS LOS MONOS ESTÁN AFUERA" color="red"
+                align="center" position="0 2.4 -2.5" scale="1.5 1.5 1.5"></a-text>
+      </a-entity>
 
-      <!-- Punto rojo justo encima del arco -->
-      <a-sphere color="#cc0033" radius="0.07" position="0 1.2 0"></a-sphere>
-    </a-entity>
+      <!-- Cámara fija -->
+      <a-entity camera look-controls="enabled: true" wasd-controls-enabled="false" position="0 1.6 0"></a-entity>
 
-    <!-- Mensaje oculto solo en VR -->
-    <a-entity id="hidden" visible="false">
-      <a-text value=\"NO TODOS LOS MONOS ESTÁN AFUERA\" color=\"red\"
-              align=\"center\" position=\"0 2.6 -2.5\" scale=\"1.8 1.8 1.8\"></a-text>
-    </a-entity>
+    </a-scene>
 
-    <!-- Cámara inmóvil y fija mirando al frente -->
-    <a-entity camera look-controls="enabled: true" wasd-controls-enabled="false" position="0 1.6 0"></a-entity>
-
-  </a-scene>
-
-  <script>
-    const scene = document.querySelector('a-scene');
-    scene.addEventListener('enter-vr', () => {
-      document.getElementById('hidden').setAttribute('visible', 'true');
-    });
-    scene.addEventListener('exit-vr', () => {
-      document.getElementById('hidden').setAttribute('visible', 'false');
-    });
-  </script>
-</body>
+    <script>
+      const scene = document.querySelector('a-scene');
+      scene.addEventListener('enter-vr', () => {
+        document.getElementById('hidden').setAttribute('visible', 'true');
+      });
+      scene.addEventListener('exit-vr', () => {
+        document.getElementById('hidden').setAttribute('visible', 'false');
+      });
+    </script>
+  </body>
 </html>
