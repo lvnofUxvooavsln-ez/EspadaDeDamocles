@@ -6,28 +6,16 @@
     <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
   </head>
   <body style="margin:0;overflow:hidden;">
-    <a-scene id="scene" vr-mode-ui="enabled: true" background="color: white"><!-- Curvas y punto visibles desde el principio -->
-  <a-entity position="0 1.5 -2.5">
-    <!-- Cara triste rosa -->
-    <a-entity id="cara-rosa">
-      <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="1 0 0" rotation="0 0 -60"></a-box>
-      <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="0.5 0 0" rotation="0 0 -30"></a-box>
-      <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="0 0 0" rotation="0 0 0"></a-box>
-      <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="-0.5 0 0" rotation="0 0 30"></a-box>
-      <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="-1 0 0" rotation="0 0 60"></a-box>
-    </a-entity>
+    <a-scene id="scene" vr-mode-ui="enabled: true" background="color: white"><!-- Símbolo central tipo 'cargando' -->
+  <a-entity position="0 1.6 -2.5">
+    <!-- Semicírculo rosa arriba -->
+    <a-torus color="#ff69b4" arc="180" radius="0.8" radius-tubular="0.05" rotation="0 0 0"></a-torus>
 
-    <!-- Sombra negra debajo -->
-    <a-entity id="cara-negra" position="0 -0.07 0.01">
-      <a-box color="#000000" depth="0.05" height="0.05" width="0.3" position="1 0 0" rotation="0 0 -60"></a-box>
-      <a-box color="#000000" depth="0.05" height="0.05" width="0.3" position="0.5 0 0" rotation="0 0 -30"></a-box>
-      <a-box color="#000000" depth="0.05" height="0.05" width="0.3" position="0 0 0" rotation="0 0 0"></a-box>
-      <a-box color="#000000" depth="0.05" height="0.05" width="0.3" position="-0.5 0 0" rotation="0 0 30"></a-box>
-      <a-box color="#000000" depth="0.05" height="0.05" width="0.3" position="-1 0 0" rotation="0 0 60"></a-box>
-    </a-entity>
+    <!-- Semicírculo negro debajo -->
+    <a-torus color="#000000" arc="180" radius="0.8" radius-tubular="0.05" rotation="180 0 0" position="0 -0.01 0"></a-torus>
 
     <!-- Punto rojo arriba -->
-    <a-sphere color="#cc0033" radius="0.07" position="0 0.6 0"></a-sphere>
+    <a-sphere color="#cc0033" radius="0.07" position="0 0.9 0"></a-sphere>
   </a-entity>
 
   <!-- Cámara -->
