@@ -1,14 +1,14 @@
 <!DOCTYPE html><html lang="es">
   <head>
     <meta charset="utf-8" />
-    <title>Curva Silenciosa</title>
+    <title>Espada de Damocles VR</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
   </head>
   <body style="margin:0;overflow:hidden;">
-    <a-scene background="color: white" vr-mode-ui="enabled: true"><!-- Grupo de curvas estilo cara triste -->
+    <a-scene id="scene" vr-mode-ui="enabled: true" background="color: white"><!-- Curvas y punto visibles desde el principio -->
   <a-entity position="0 1.5 -2.5">
-    <!-- Cara triste rosa (boca) -->
+    <!-- Cara triste rosa -->
     <a-entity id="cara-rosa">
       <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="1 0 0" rotation="0 0 -60"></a-box>
       <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="0.5 0 0" rotation="0 0 -30"></a-box>
@@ -17,7 +17,7 @@
       <a-box color="#ff69b4" depth="0.05" height="0.05" width="0.3" position="-1 0 0" rotation="0 0 60"></a-box>
     </a-entity>
 
-    <!-- Sombra negra justo debajo -->
+    <!-- Sombra negra debajo -->
     <a-entity id="cara-negra" position="0 -0.07 0.01">
       <a-box color="#000000" depth="0.05" height="0.05" width="0.3" position="1 0 0" rotation="0 0 -60"></a-box>
       <a-box color="#000000" depth="0.05" height="0.05" width="0.3" position="0.5 0 0" rotation="0 0 -30"></a-box>
@@ -26,28 +26,80 @@
       <a-box color="#000000" depth="0.05" height="0.05" width="0.3" position="-1 0 0" rotation="0 0 60"></a-box>
     </a-entity>
 
-    <!-- Punto rojo justo encima -->
+    <!-- Punto rojo arriba -->
     <a-sphere color="#cc0033" radius="0.07" position="0 0.6 0"></a-sphere>
   </a-entity>
 
-  <!-- Mensaje oculto -->
-  <a-entity id="hidden" visible="false">
-    <a-text value="NO TODOS LOS MONOS ESTÁN AFUERA" color="red"
-            align="center" position="0 2.4 -2.5" scale="1.5 1.5 1.5"></a-text>
-  </a-entity>
-
-  <!-- Cámara fija -->
+  <!-- Cámara -->
   <a-entity camera look-controls="enabled: true" wasd-controls-enabled="false" position="0 1.6 0"></a-entity>
 
+  <!-- Mensajes misteriosos -->
+  <a-entity id="mensajes"></a-entity>
+
+  <!-- Mono atacante (oculto al inicio) -->
+  <a-box id="mono" visible="false" color="#442200" position="0 1.5 -10" depth="0.5" height="1" width="0.5"></a-box>
+
+  <!-- Sonido ambiental y efectos -->
+  <a-assets>
+    <audio id="musica" src="https://cdn.pixabay.com/audio/2022/12/02/audio_3f7790cfcb.mp3"></audio>
+    <audio id="gritoMono" src="https://cdn.pixabay.com/audio/2021/09/01/audio_ae86ef6ce2.mp3"></audio>
+  </a-assets>
+  <a-sound id="ambiente" src="#musica" autoplay="false" loop="true" volume="0.3"></a-sound>
+  <a-sound id="monoScream" src="#gritoMono" autoplay="false" loop="false" volume="1"></a-sound>
 </a-scene>
 
 <script>
-  const scene = document.querySelector('a-scene');
-  scene.addEventListener('enter-vr', () => {
-    document.getElementById('hidden').setAttribute('visible', 'true');
+  const scene = document.querySelector("a-scene");
+  const ambiente = document.querySelector("#ambiente");
+  const scream = document.querySelector("#monoScream");
+  const mono = document.querySelector("#mono");
+  const mensajes = document.querySelector("#mensajes");
+
+  const frases = ["¿Hola?", "Ayuda...", "¿Hay alguien aquí?", "No salgas.", "Ya es tarde.", "Mírame.", "Te estoy viendo."];
+
+  function crearMensaje(texto) {
+    const msg = document.createElement("a-text");
+    msg.setAttribute("value", texto);
+    msg.setAttribute("color", "#ff0000");
+    msg.setAttribute("position", `${(Math.random() * 4 - 2).toFixed(2)} ${(Math.random() * 2 + 0.5).toFixed(2)} -2.5`);
+    msg.setAttribute("scale", "1 1 1");
+    mensajes.appendChild(msg);
+  }
+
+  function lanzarMensajes() {
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => crearMensaje(frases[Math.floor(Math.random() * frases.length)]), i * 1500);
+    }
+  }
+
+  function lanzarMono() {
+    mono.setAttribute("visible", true);
+    mono.setAttribute("animation", {
+      property: "position",
+      to: "0 1.5 -1",
+      dur: 3000,
+      easing: "linear"
+    });
+    scream.components.sound.playSound();
+    setTimeout(() => {
+      if (scene.xrSession) scene.exitVR();
+    }, 3200);
+  }
+
+  scene.addEventListener("enter-vr", () => {
+    scene.setAttribute("background", "color: #000000");
+    ambiente.components.sound.playSound();
+    lanzarMensajes();
+    setTimeout(() => scream.components.sound.playSound(), 10000);
+    setTimeout(() => lanzarMono(), 60000);
   });
-  scene.addEventListener('exit-vr', () => {
-    document.getElementById('hidden').setAttribute('visible', 'false');
+
+  scene.addEventListener("exit-vr", () => {
+    ambiente.components.sound.stopSound();
+    scream.components.sound.stopSound();
+    mono.setAttribute("visible", false);
+    mensajes.innerHTML = "";
+    scene.setAttribute("background", "color: white");
   });
 </script>
 
