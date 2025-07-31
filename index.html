@@ -6,16 +6,14 @@
     <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
   </head>
   <body style="margin:0;overflow:hidden;">
-    <a-scene id="scene" vr-mode-ui="enabled: true" background="color: white"><!-- Símbolo central tipo 'cargando' -->
-  <a-entity position="0 1.6 -2.5">
-    <!-- Semicírculo rosa arriba -->
-    <a-torus color="#ff69b4" arc="180" radius="0.8" radius-tubular="0.05" rotation="0 0 0"></a-torus>
-
-    <!-- Semicírculo negro debajo -->
-    <a-torus color="#000000" arc="180" radius="0.8" radius-tubular="0.05" rotation="180 0 0" position="0 -0.01 0"></a-torus>
-
+    <a-scene id="scene" vr-mode-ui="enabled: true" background="color: white"><!-- Círculo doble girando -->
+  <a-entity position="0 1.6 -2.5" rotation="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
+    <!-- Anillo rosa -->
+    <a-ring color="#ff69b4" radius-inner="0.48" radius-outer="0.5" rotation="90 0 0"></a-ring>
+    <!-- Anillo negro ligeramente más pequeño y detrás -->
+    <a-ring color="#000000" radius-inner="0.45" radius-outer="0.47" rotation="90 0 0" position="0 0 -0.01"></a-ring>
     <!-- Punto rojo arriba -->
-    <a-sphere color="#cc0033" radius="0.07" position="0 0.9 0"></a-sphere>
+    <a-sphere color="#cc0033" radius="0.07" position="0 0.7 0"></a-sphere>
   </a-entity>
 
   <!-- Cámara -->
